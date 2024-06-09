@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import br.com.felipe.luiz.database.ConnectionFactory;
+import br.com.felipe.luiz.pedidos.Pedido;
+import br.com.felipe.luiz.pedidos.PedidosManager;
 
 public class CardapioManager {
 	
@@ -66,20 +68,36 @@ public class CardapioManager {
 	public void removerProduto(Produto produto) {
 		
 		if (this.produtos.contains(produto)) {
-
-			// open: remover da database pelo objeto
-			ConnectionFactory cf = new ConnectionFactory();
-			try (Connection c = cf.obtemConexao()) {
-				String cmd = "DELETE FROM produto WHERE id = ?";
-				PreparedStatement ps = c.prepareStatement(cmd);
-				ps.setInt(1, produto.getId());
-				ps.execute();
-				this.produtos.remove(produto);
-				JOptionPane.showMessageDialog(null, "Produto removido com sucesso.");
-				return;
+			
+			PedidosManager pm = new PedidosManager();
+			boolean pedidoAberto = false;
+			for (Pedido p : pm.getPedidos()) {
+				if (p.getProduto().getId() == produto.getId()) {
+					pedidoAberto = true;
+				}
+			}
+			if (!pedidoAberto) {
 				
-			} catch (Exception ex) { ex.printStackTrace(); }
-			// close.
+				// open: remover da database pelo objeto
+				ConnectionFactory cf = new ConnectionFactory();
+				try (Connection c = cf.obtemConexao()) {
+					String cmd = "DELETE FROM produto WHERE id = ?";
+					PreparedStatement ps = c.prepareStatement(cmd);
+					ps.setInt(1, produto.getId());
+					ps.execute();
+					this.produtos.remove(produto);
+					JOptionPane.showMessageDialog(null, "Produto removido com sucesso.");
+					return;
+					
+				} catch (Exception ex) { ex.printStackTrace(); }
+				// close.
+				
+			} else {
+
+				JOptionPane.showMessageDialog(null, "Não foi possível remover o produto pois existe um pedido registrado com o mesmo."
+						+ "\nSolução: cancele ou exclua o pedido e tente novamente.");
+				
+			}
 			
 		} else {
 			
@@ -89,23 +107,37 @@ public class CardapioManager {
 		
 	} public void removerProduto(String descricao) {
 		
-		for (Produto p : this.produtos) {
+		for (Produto pr : this.produtos) {
 			
-			if (p.getDescricao().equalsIgnoreCase(descricao)) {
-
-				// open: remover da database pela descricao
-				ConnectionFactory cf = new ConnectionFactory();
-				try (Connection c = cf.obtemConexao()) {
-					String cmd = "DELETE FROM produto WHERE id = ?";
-					PreparedStatement ps = c.prepareStatement(cmd);
-					ps.setInt(1, p.getId());
-					ps.execute();
-					this.produtos.remove(p);
-					JOptionPane.showMessageDialog(null, "Produto removido com sucesso.");
-					return;
+			if (pr.getDescricao().equalsIgnoreCase(descricao)) {
+				
+				PedidosManager pm = new PedidosManager();
+				boolean pedidoAberto = false;
+				for (Pedido p : pm.getPedidos()) {
+					if (p.getProduto().getId() == pr.getId()) { pedidoAberto = true; }
+				}
+				if (!pedidoAberto) {
 					
-				} catch (Exception ex) { ex.printStackTrace(); }
-				// close.
+					// open: remover da database pelo objeto
+					ConnectionFactory cf = new ConnectionFactory();
+					try (Connection c = cf.obtemConexao()) {
+						String cmd = "DELETE FROM produto WHERE id = ?";
+						PreparedStatement ps = c.prepareStatement(cmd);
+						ps.setInt(1, pr.getId());
+						ps.execute();
+						this.produtos.remove(pr);
+						JOptionPane.showMessageDialog(null, "Produto removido com sucesso.");
+						return;
+						
+					} catch (Exception ex) { ex.printStackTrace(); }
+					// close.
+					
+				} else {
+
+					JOptionPane.showMessageDialog(null, "Não foi possível remover o produto pois existe um pedido registrado com o mesmo."
+							+ "\nSolução: cancele ou exclua o pedido e tente novamente.");
+					
+				}
 				
 			} else { continue; }
 			
@@ -115,23 +147,37 @@ public class CardapioManager {
 		
 	} public void removerProduto(int id) {
 		
-		for (Produto p : this.produtos) {
+		for (Produto pr : this.produtos) {
 			
-			if (p.getId() == id) {
+			if (pr.getId() == id) {
 
-				// open: remover da database pela id
-				ConnectionFactory cf = new ConnectionFactory();
-				try (Connection c = cf.obtemConexao()) {
-					String cmd = "DELETE FROM produto WHERE id = ?";
-					PreparedStatement ps = c.prepareStatement(cmd);
-					ps.setInt(1, p.getId());
-					ps.execute();
-					this.produtos.remove(p);
-					JOptionPane.showMessageDialog(null, "Produto removido com sucesso.");
-					return;
+				PedidosManager pm = new PedidosManager();
+				boolean pedidoAberto = false;
+				for (Pedido p : pm.getPedidos()) {
+					if (p.getProduto().getId() == pr.getId()) { pedidoAberto = true; }
+				}
+				if (!pedidoAberto) {
 					
-				} catch (Exception ex) { ex.printStackTrace(); }
-				// close.
+					// open: remover da database pelo objeto
+					ConnectionFactory cf = new ConnectionFactory();
+					try (Connection c = cf.obtemConexao()) {
+						String cmd = "DELETE FROM produto WHERE id = ?";
+						PreparedStatement ps = c.prepareStatement(cmd);
+						ps.setInt(1, pr.getId());
+						ps.execute();
+						this.produtos.remove(pr);
+						JOptionPane.showMessageDialog(null, "Produto removido com sucesso.");
+						return;
+						
+					} catch (Exception ex) { ex.printStackTrace(); }
+					// close.
+					
+				} else {
+
+					JOptionPane.showMessageDialog(null, "Não foi possível remover o produto pois existe um pedido registrado com o mesmo."
+							+ "\nSolução: cancele ou exclua o pedido e tente novamente.");
+					
+				}
 				
 			} else { continue; }
 			

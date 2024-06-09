@@ -69,7 +69,6 @@ public class Administration extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		Image img = new ImageIcon(this.getClass().getResource("/home_img.png")).getImage();
-		
 		Button button = new Button("Estoque");
 		button.setFont(new Font("Dialog", Font.BOLD, 14));
 		button.addActionListener(new ActionListener() {

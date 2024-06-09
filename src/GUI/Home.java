@@ -199,7 +199,7 @@ public class Home extends JFrame {
 		contentPane.add(panel);
 		
 		passwordField = new JPasswordField();
-		passwordField.setToolTipText("asd");
+		passwordField.setToolTipText("Senha padrão: abc123");
 		
 		JLabel lblNewLabel = new JLabel("Senha");
 		

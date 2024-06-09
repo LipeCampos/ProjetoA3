@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import br.com.felipe.luiz.database.ConnectionFactory;
+import br.com.felipe.luiz.pedidos.Pedido;
+import br.com.felipe.luiz.pedidos.PedidosManager;
 
 public class FormasDePagamentoManager {
 	
@@ -63,20 +65,36 @@ public class FormasDePagamentoManager {
 	public void removerFormaDePagamento(FormaDePagamento formaDePagamento) {
 		
 		if (this.formasDePagamento.contains(formaDePagamento)) {
-
-			// open: remover da database pelo objeto
-			ConnectionFactory cf = new ConnectionFactory();
-			try (Connection c = cf.obtemConexao()) {
-				String cmd = "DELETE FROM forma_de_pagamento WHERE id = ?";
-				PreparedStatement ps = c.prepareStatement(cmd);
-				ps.setInt(1, formaDePagamento.getId());
-				ps.execute();
-				this.formasDePagamento.remove(formaDePagamento);
-				JOptionPane.showMessageDialog(null, "Forma de pagamento removida.");
-				return;
+			
+			PedidosManager pm = new PedidosManager();
+			boolean pedidoAberto = false;
+			for (Pedido p : pm.getPedidos()) {
+				if (p.getFormaDePagamento().getId() == formaDePagamento.getId()) {
+					pedidoAberto = true;
+				}
+			}
+			if (!pedidoAberto) {
 				
-			} catch (Exception ex) { ex.printStackTrace(); }
-			// close.
+				// open: remover da database pelo objeto
+				ConnectionFactory cf = new ConnectionFactory();
+				try (Connection c = cf.obtemConexao()) {
+					String cmd = "DELETE FROM forma_de_pagamento WHERE id = ?";
+					PreparedStatement ps = c.prepareStatement(cmd);
+					ps.setInt(1, formaDePagamento.getId());
+					ps.execute();
+					this.formasDePagamento.remove(formaDePagamento);
+					JOptionPane.showMessageDialog(null, "Forma de pagamento removida.");
+					return;
+					
+				} catch (Exception ex) { ex.printStackTrace(); }
+				// close.
+				
+			} else {
+
+				JOptionPane.showMessageDialog(null, "Não foi possível remover a forma de pagamento pois existe um pedido registrado com a mesma."
+						+ "\nSolução: cancele ou exclua o pedido e tente novamente.");
+				
+			}
 			
 		} else {
 			
@@ -90,19 +108,35 @@ public class FormasDePagamentoManager {
 			
 			if (fp.getDescricao().equalsIgnoreCase(descricao)) {
 
-				// open: remover da database pela descricao
-				ConnectionFactory cf = new ConnectionFactory();
-				try (Connection c = cf.obtemConexao()) {
-					String cmd = "DELETE FROM forma_de_pagamento WHERE id = ?";
-					PreparedStatement ps = c.prepareStatement(cmd);
-					ps.setInt(1, fp.getId());
-					ps.execute();
-					this.formasDePagamento.remove(fp);
-					JOptionPane.showMessageDialog(null, "Forma de pagamento removida.");
-					return;
+				PedidosManager pm = new PedidosManager();
+				boolean pedidoAberto = false;
+				for (Pedido p : pm.getPedidos()) {
+					if (p.getFormaDePagamento().getId() == fp.getId()) {
+						pedidoAberto = true;
+					}
+				}
+				if (!pedidoAberto) {
 					
-				} catch (Exception ex) { ex.printStackTrace(); }
-				// close.
+					// open: remover da database pelo objeto
+					ConnectionFactory cf = new ConnectionFactory();
+					try (Connection c = cf.obtemConexao()) {
+						String cmd = "DELETE FROM forma_de_pagamento WHERE id = ?";
+						PreparedStatement ps = c.prepareStatement(cmd);
+						ps.setInt(1, fp.getId());
+						ps.execute();
+						this.formasDePagamento.remove(fp);
+						JOptionPane.showMessageDialog(null, "Forma de pagamento removida.");
+						return;
+						
+					} catch (Exception ex) { ex.printStackTrace(); }
+					// close.
+					
+				} else {
+
+					JOptionPane.showMessageDialog(null, "Não foi possível remover a forma de pagamento pois existe um pedido registrado com a mesma."
+							+ "\nSolução: cancele ou exclua o pedido e tente novamente.");
+					
+				}
 				
 			} else { continue; }
 			
@@ -116,19 +150,35 @@ public class FormasDePagamentoManager {
 			
 			if (fp.getId() == id) {
 
-				// open: remover da database pela id
-				ConnectionFactory cf = new ConnectionFactory();
-				try (Connection c = cf.obtemConexao()) {
-					String cmd = "DELETE FROM forma_de_pagamento WHERE id = ?";
-					PreparedStatement ps = c.prepareStatement(cmd);
-					ps.setInt(1, fp.getId());
-					ps.execute();
-					this.formasDePagamento.remove(fp);
-					JOptionPane.showMessageDialog(null, "Forma de pagamento removida.");
-					return;
+				PedidosManager pm = new PedidosManager();
+				boolean pedidoAberto = false;
+				for (Pedido p : pm.getPedidos()) {
+					if (p.getFormaDePagamento().getId() == fp.getId()) {
+						pedidoAberto = true;
+					}
+				}
+				if (!pedidoAberto) {
 					
-				} catch (Exception ex) { ex.printStackTrace(); }
-				// close.
+					// open: remover da database pelo objeto
+					ConnectionFactory cf = new ConnectionFactory();
+					try (Connection c = cf.obtemConexao()) {
+						String cmd = "DELETE FROM forma_de_pagamento WHERE id = ?";
+						PreparedStatement ps = c.prepareStatement(cmd);
+						ps.setInt(1, fp.getId());
+						ps.execute();
+						this.formasDePagamento.remove(fp);
+						JOptionPane.showMessageDialog(null, "Forma de pagamento removida.");
+						return;
+						
+					} catch (Exception ex) { ex.printStackTrace(); }
+					// close.
+					
+				} else {
+
+					JOptionPane.showMessageDialog(null, "Não foi possível remover a forma de pagamento pois existe um pedido registrado com a mesma."
+							+ "\nSolução: cancele ou exclua o pedido e tente novamente.");
+					
+				}
 				
 			} else { continue; }
 			

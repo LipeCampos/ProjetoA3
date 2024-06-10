@@ -96,7 +96,8 @@ public class Administration extends JFrame {
 						for (Insumo i : insumos) {
 							
 							String[] editOptions = {"Editar", "Excluir", "Próximo ->"};
-							input = JOptionPane.showOptionDialog(null, i.getDescricao(), "Gestor de Insumos", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, editOptions, 0);
+							input = JOptionPane.showOptionDialog(null, i.getDescricao()
+									+ "\n↪ Código: " + i.getId(), "Gestor de Insumos", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, editOptions, 0);
 							
 							if (input == 0) {
 								
@@ -234,9 +235,13 @@ public class Administration extends JFrame {
 						for (Produto p : produtos) {
 							
 							String alteracao = "Tornar visível";
-							if (p.isVisible()) { alteracao = "Desabilitar"; }
+							String status = "Desabilitado";
+							if (p.isVisible()) { alteracao = "Desabilitar"; status = "Habilitado"; }
 							String[] editOptions = {alteracao, "Excluir", "Próximo ->"};
-							input = JOptionPane.showOptionDialog(null, p.getDescricao(), "Gestor de Insumos", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, editOptions, 0);
+							input = JOptionPane.showOptionDialog(null, p.getDescricao()
+									+ "\n↪ Preço: R$:" + p.getPreco()
+									+ "\n↪ Status: " + status
+									+ "\n↪ Código: " + p.getId(), "Gestor de Produtos", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, editOptions, 0);
 							
 							if (input == 0) {
 								
@@ -294,7 +299,8 @@ public class Administration extends JFrame {
 						for (FormaDePagamento fp : formasDePagamento) {
 							
 							String[] editOptions = {"Excluir", "Próximo ->"};
-							input = JOptionPane.showOptionDialog(null, fp.getDescricao(), "Gestor de Formas de Pagamento", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, editOptions, 0);
+							input = JOptionPane.showOptionDialog(null, fp.getDescricao()
+									+ "\n↪ Código: " + fp.getId(), "Gestor de Formas de Pagamento", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, editOptions, 0);
 							
 							if (input == 0) { fpm.removerFormaDePagamento(fp); break; } else { continue; }
 							
@@ -388,7 +394,7 @@ public class Administration extends JFrame {
 									+ "\n↪ Produto: " + p.getProduto().getDescricao()
 									+ "\n↪ Valor: R$:" + p.getProduto().getPreco()
 									+ "\n↪ Forma de Pagamento: " + p.getFormaDePagamento().getDescricao()
-									+ "\n↪ Status: " + status, "Gestor de Insumos", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, editOptions, 0);
+									+ "\n↪ Status: " + status, "Gestor de Pedidos", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, editOptions, 0);
 							
 							if (input == 0) {
 								

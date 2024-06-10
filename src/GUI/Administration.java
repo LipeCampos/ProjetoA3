@@ -390,7 +390,7 @@ public class Administration extends JFrame {
 							String[] editOptions = {alteracao, deny, "Próximo ->"};
 							String status = "Aberto";
 							if (p.isDone()) status = "Finalizado";
-							input = JOptionPane.showOptionDialog(null, "Pedido Nº" + p.getId()
+							input = JOptionPane.showOptionDialog(null, "Pedido Nº" + p.getId() + " - Mesa: " + p.getMesa()
 									+ "\n↪ Produto: " + p.getProduto().getDescricao()
 									+ "\n↪ Valor: R$:" + p.getProduto().getPreco()
 									+ "\n↪ Forma de Pagamento: " + p.getFormaDePagamento().getDescricao()

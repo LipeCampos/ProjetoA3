@@ -204,6 +204,9 @@ public class Home extends JFrame {
 		JLabel lblNewLabel = new JLabel("Senha");
 		
 		JSeparator separator = new JSeparator();
+		
+		JLabel lblNewLabel_3 = new JLabel("Painel Administrativo");
+		lblNewLabel_3.setFont(new Font("Verdana", Font.PLAIN, 16));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -220,11 +223,17 @@ public class Home extends JFrame {
 					.addContainerGap()
 					.addComponent(separator, GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
 					.addContainerGap())
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(77)
+					.addComponent(lblNewLabel_3)
+					.addContainerGap(81, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
-					.addGap(81)
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(30)
+					.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
 					.addComponent(lblNewLabel)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
